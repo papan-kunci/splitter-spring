@@ -7,7 +7,17 @@ import jakarta.persistence.*
 data class User (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
-    val name: String,
-    val email: String
-)
+    var id: Int,
+
+    @Column(name = "email", nullable = false)
+    var email: String,
+
+    @Column(name = "first_name", nullable = false)
+    var firstName: String = "",
+
+    @Column(name = "last_name", nullable = false)
+    var lastName: String = "",
+) {
+    @Column(name = "password")
+    var password: String? = null
+}

@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController
 class AuthenticationController(@Autowired private val userRepository: UserRepository)  {
     @PostMapping
     fun login(@RequestBody user: User): ResponseEntity<User> {
-        val user = userRepository.findByEmail(user.email)
-        if (user != null) {
-            return ResponseEntity(user, HttpStatus.OK)
+        var normalizedUser = user.copy(email = user.email.lowercase())
+        val existingUser = userRepository.findByEmail(normalizedUser.email)
+        if (existingUser != null) {
+            if (user.password != existingUser.password) {
+                return ResponseEntity(HttpStatus.UNAUTHORIZED)
+            }
+            return ResponseEntity(existingUser, HttpStatus.OK)
         }
         return ResponseEntity(HttpStatus.NOT_FOUND)
     }
