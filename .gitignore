@@ -1,0 +1,15 @@
+# Compiled Java classes and JAR files
+/build/
+/out/
+
+# Gradle directories
+.gradle/
+.gradle.kts/
+
+# IntelliJ IDEA directories and files
+.idea/
+*.iml
+
+# Operating System files
+.DS_Store
+Thumbs.db
