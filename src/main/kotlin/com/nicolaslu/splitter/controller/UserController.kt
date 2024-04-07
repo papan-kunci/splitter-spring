@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/v1/user")
 class UserController(@Autowired private val userRepository: UserRepository) {
 
     @GetMapping
@@ -27,9 +27,10 @@ class UserController(@Autowired private val userRepository: UserRepository) {
         return ResponseEntity(savedUser, HttpStatus.CREATED)
     }
 
-    @GetMapping("/{id}")
-    fun getUserById(@PathVariable("id") userId: Int): ResponseEntity<User> {
-        val user = userRepository.findById(userId).orElse(null)
+
+    @GetMapping("/{email}")
+    fun getUserByEmail(@PathVariable("email") userEmail: String): ResponseEntity<User> {
+        val user = userRepository.findByEmail(userEmail)
         if (user != null) {
             return ResponseEntity(user, HttpStatus.OK)
         }

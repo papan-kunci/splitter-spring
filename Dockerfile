@@ -6,6 +6,9 @@ WORKDIR /app
 # copy everything from current directory to app directory
 COPY . .
 
+# Ensure gradlew script has permissions
+RUN dos2unix /app/gradlew && chmod +x /app/gradlew
+
 # build the app
 RUN ./gradlew clean build -x test
 
