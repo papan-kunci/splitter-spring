@@ -32,6 +32,7 @@ class UserController(@Autowired private val userRepository: UserRepository) {
         //TODO: handle password properly
         normalizedUser.password = user.password
         val savedUser = userRepository.save(normalizedUser)
+        println("User created: ${savedUser.email}")
         return ResponseEntity(UserInfo(savedUser.email).from(savedUser), HttpStatus.CREATED)
     }
 
@@ -50,14 +51,16 @@ class UserController(@Autowired private val userRepository: UserRepository) {
         val existingUser = userRepository.findByEmail(userEmail) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         val updatedUser = existingUser.copy(firstName = user.firstName, lastName = user.lastName, email = user.email.lowercase())
         userRepository.save(updatedUser)
+        println("User data updated: ${updatedUser.email}")
         return ResponseEntity(UserInfo(updatedUser.email).from(updatedUser), HttpStatus.OK)
     }
 
-    @DeleteMapping("/{email}")
-    fun deleteUserById(@PathVariable("email") userEmail: String): ResponseEntity<Boolean> {
-        val user = userRepository.findByEmail(userEmail.lowercase()) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+    @DeleteMapping
+    fun deleteUserById(@RequestBody user: User): ResponseEntity<Boolean> {
+        val user = userRepository.findByEmail(user.email.lowercase()) ?: return ResponseEntity(false, HttpStatus.NOT_FOUND)
+        println("User deleted: ${user.email}")
         userRepository.deleteById(user.id)
-        return ResponseEntity(HttpStatus.NO_CONTENT)
+        return ResponseEntity(true, HttpStatus.NO_CONTENT)
     }
 
     fun checkIfUserExists(email: String, expectUserExists: Boolean) {

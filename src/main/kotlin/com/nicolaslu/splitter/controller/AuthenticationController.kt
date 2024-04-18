@@ -19,10 +19,13 @@ class AuthenticationController(@Autowired private val userRepository: UserReposi
         val existingUser = userRepository.findByEmail(normalizedUser.email)
         if (existingUser != null) {
             if (user.password != existingUser.password) {
+                println("Login failed: Wrong password")
                 return ResponseEntity(HttpStatus.UNAUTHORIZED)
             }
+            println("Login successful: ${existingUser.email}")
             return ResponseEntity(existingUser, HttpStatus.OK)
         }
+        println("Login failed: User not found")
         return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 }
