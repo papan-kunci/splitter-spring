@@ -12,19 +12,19 @@ Backend service for splitter written in Kotlin Spring Boot
 
 1. Set up database
 
-   ```
-   `docker compose up -d db `
+   ```BASH
+   docker compose up -d db
    ```
 
 2. Build
 
-   ```
+   ```BASH
    docker compose build
    ```
 
 3. Run the app
 
-   ```
+   ```BASH
    docker compose up splitterbackend
    ```
 
