@@ -30,7 +30,7 @@ data class User (
     var friendships: List<Friendship> = listOf(),
 
     @OneToMany(mappedBy = "friend")
-    val receivedFriendship: List<Friendship> = listOf()
+    val receivedFriendships: List<Friendship> = listOf()
 ) {
     //TODO: encrypt password
     @Column(name = "password")
@@ -38,7 +38,7 @@ data class User (
 
     @get:JsonIgnore
     val allFriendship: List<Friendship>
-        get() = friendships + receivedFriendship
+        get() = friendships + receivedFriendships
 
     @get:JsonIgnore
     val allFriends: List<User>
