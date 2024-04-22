@@ -46,6 +46,25 @@ class UserController(@Autowired private val userRepository: UserRepository) {
         return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 
+    @GetMapping("/containing/{keyword}")
+    fun getUsersByKeyword(@PathVariable("keyword") keyword: String): ResponseEntity<List<User>> {
+        val keyword = keyword.lowercase()
+        val userByEmail = userRepository.findByEmail(keyword)
+        val usersByFirstName = userRepository.findByFirstNameContaining(keyword)
+        val usersByLastName = userRepository.findByLastNameContaining(keyword)
+
+        val combinedUsersSet = mutableSetOf<User>()
+        if (userByEmail != null) { combinedUsersSet.add(userByEmail) }
+        combinedUsersSet.addAll(usersByFirstName)
+        combinedUsersSet.addAll(usersByLastName)
+
+        return if (combinedUsersSet.toList().isEmpty()) {
+            ResponseEntity(listOf(), HttpStatus.NOT_FOUND)
+        } else {
+            ResponseEntity(combinedUsersSet.toList(), HttpStatus.OK)
+        }
+    }
+
     @PutMapping("/{email}")
     fun updateUserById(@PathVariable("email") userEmail: String, @RequestBody user: User): ResponseEntity<UserInfo> {
         val existingUser = userRepository.findByEmail(userEmail) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
