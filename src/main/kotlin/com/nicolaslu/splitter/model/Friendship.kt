@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "friendship",
+@Table(name = "friendships",
     uniqueConstraints = [UniqueConstraint(columnNames = ["user_id", "friend_id"])]
 )
 data class Friendship (
