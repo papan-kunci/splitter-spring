@@ -30,7 +30,13 @@ data class User (
     var friendships: List<Friendship> = listOf(),
 
     @OneToMany(mappedBy = "friend")
-    val receivedFriendships: List<Friendship> = listOf()
+    val receivedFriendships: List<Friendship> = listOf(),
+
+    @OneToMany(mappedBy = "payer")
+    val transactionsAsPayer: List<Transaction> = listOf(),
+
+    @OneToMany(mappedBy = "payee")
+    val transactionsAsPayee: List<Transaction> = listOf()
 ) {
     //TODO: encrypt password
     @Column(name = "password")

@@ -17,6 +17,8 @@ fun UserInfo.from(user: User): UserInfo {
     this.friendships = user.friendships
     this.receivedFriendships = user.receivedFriendships
     this.allFriendsEmail = user.allFriendsEmail
+    this.transactionsAsPayee = user.transactionsAsPayee
+    this.transactionsAsPayer = user.transactionsAsPayer
 
     return this
 }
