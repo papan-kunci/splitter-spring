@@ -10,10 +10,10 @@ COPY . .
 RUN dos2unix /app/gradlew && chmod +x /app/gradlew
 
 # build the app
-RUN ./gradlew clean build -x test
+RUN ./gradlew --no-daemon clean build -x test
 
-# expose port 8080
-EXPOSE 8080
+# expose port 3000
+EXPOSE 3000
 
 # run the app
 CMD ["java", "-jar", "./build/libs/splitter-0.0.1-SNAPSHOT.jar"]
