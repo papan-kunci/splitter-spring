@@ -1,4 +1,4 @@
-FROM amazoncorretto:17-alpine-jdk
+FROM --platform=linux/amd64 amazoncorretto:17-alpine-jdk
 
 # create a directory for the app
 WORKDIR /app
@@ -10,7 +10,7 @@ COPY . .
 RUN dos2unix /app/gradlew && chmod +x /app/gradlew
 
 # build the app
-RUN ./gradlew --no-daemon clean build -x test
+RUN ./gradlew --no-daemon clean build -x test --info
 
 # expose port 3000
 EXPOSE 3000
